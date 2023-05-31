@@ -1,15 +1,32 @@
-// TS can infer the values for name, age
-// can use type object or {} but use {} and
-// define the object. 
+// we don't know what the user will enter
 
-const person: {
-  name: string;
-  age: number;
-} = {
-  name: "Mike",
-  age: 30,
-};
+let userInput: unknown;
+let userName: string;
 
-console.log(person.name);
+userInput = 5;
+userInput = "Max";
 
-export { person };
+// string userName not assignbale to unknown userInput
+// if we typecheck userInput to guarantee its a string, then we can assign userName to userInput because
+// TS is certain it will recieve a string from userInput.
+
+if (typeof userInput === "string") {
+  userName = userInput;
+}
+
+// unknown better than any because you can use type checking to guarantee variable types.
+
+
+// using Never type. Void is typically assumed, but for utlity functions like this that throw errors, 
+// it will never return anything. 
+
+function generateError(message: string, code: number): never {
+  throw { message: message, errorCode: code };
+}
+
+// also a good case for NEVER
+while (true) {}; 
+
+generateError("An error!", 500);
+
+export default { generateError };
